@@ -14,8 +14,11 @@ public class TriggerCoin : MonoBehaviour
         {
             // 生在金幣所在處：transform.position = GetComponent<Transform>().position
             var soundObj = Instantiate(soundObject, transform.position, Quaternion.identity);  //只能用在class內，外人看不到
-            Destroy(gameObject);  // gameObject=金幣
+            Destroy(gameObject);  // gameObject=旗子
             Destroy(soundObj,0.5f);  // 音效prefab，注意要等音效播完才銷毀
+            
+            double[] test01 = { 0, 1, 22, 333 };
+            Debug.Log("test01是" + test01);  // System.Double[]
         }
     }
 }

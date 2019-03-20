@@ -30,7 +30,6 @@ public class mainCharacter : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_transform = GetComponent<Transform>();  // 是初始位置，還是是一個會持續變更值的容器?
-
     }
 
 
