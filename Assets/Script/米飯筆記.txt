@@ -1,0 +1,355 @@
+變數定義
+public type name;
+	public GameObject soundObject;
+
+類別
+public class 本體className:繼承對象class
+	public class TriggerCoin : MonoBehaviour
+
+方法/函數 - 不回傳
+void start(type 參數){}
+	public void InvokeRepeating(string methodName, float time, float repeatRate);
+
+方法/函數 - 回傳
+public type name(type 參數){}
+	public bool IsInvoking(string methodName);
+
+
+2D專案
+【專案環境】
+匯入素材
+需要左右無限延長→ 物件選tiled + 素材選fullRect
+調整解析度=1920*1080 + camera size=5.4
+camera視角(projection)分兩種：Perspective/Orthographic
+P：透視視角(後面比較小)
+O：平行視角(前後物件一樣大)
+
+米飯建議
+camera在Orth的情況下
+size=像素高度/2/100
+在這邊，5.4=1080/2/100
+(目的是：這樣可以讓攝影機的外框，剛好框在邊緣)
+
+如果是 1280*720的話 那size=3.6
+
+
+【碰撞相關】
+
+賦予角色+地面的collider(碰撞體)
+	選擇地塊
+		addComponent/ box_Collider 2D
+		Auto Tiling勾選 (應該是為了判定他是地面)
+	選擇角色
+		addComponent/ capsule_Collider_2D (膠囊碰撞體)
+
+
+可是這時候，還沒有重力模擬，所以play之後，角色是不會落下的
+所以要
+設定 rigidbody2D (剛體)   注意!!! 不是3D的 rigidbody
+	選擇角色
+		addComponent/ rigidbody2D
+掛上去就會落下了
+
+[注意]
+有時候 rigidbody(包含2D) 會有點奇怪，
+比方說當角色被其他碰撞體影響，而不小心被旋轉了的話，
+軸向會因此變的不合理
+
+→ 所以!! 你需要凍結 rigidbody2D 的特定軸向!
+	選擇角色
+		rigidbody2D/ Constrains/ freeze Z軸
+	
+	PS.jumi 不過我發現一件事，雖然他是膠囊碰撞體，但如果初始rotation=0,0,0
+		那其實角色落下的時候，並不會向左右倒下 (本來以為膠囊底部是弧形所以會倒下)
+
+
+建立箱子sprite，設定 collider2D 和 rigidbody2D
+
+
+【開始寫腳本】
+[複習] 遊戲執行後的五個階段
+Awake
+Start
+Update
+LateUpdate
+OnApplicationQuit
+OnDestroy
+
+[練習] 讓角色在 start 時，移動到特定位置 (與箱子重疊)
+
+// 對 Object 自己這個物件，get組件 transform 的 localposion這個變數
+// 使用 等於 改變變數的數值 為 new Vector3 (實例化一個 三維向量)
+        GetComponent<Transform>().localPosition = new Vector3 (3,-0.9f,0);
+		
+// transform.localPosition += new Vector3(2.5f,0,0)*Time.deltaTime;
+        GetComponent<Transform>().localPosition += new Vector3(2.5f,0,0)*Time.deltaTime;
+		
+		
+--------------------------
+#4 10:00
+每個類別下，都會有自己的變數跟方法
+但有時候，你會需要去取用別人的變數
+這時候，你取用的那個變數，對方就要把他設定成公有的，別人才取的到
+
+1.如果你不打 private public 那就是預設他是 private
+2.當你設定成 public，那麼就能夠在 inspector 上被看到，且其值以inspector優先
+
+--------------------------
+#5 動畫
+Animator (他是腦，是中樞)
+具有邏輯狀態機，控制不同的 AnimationClip 之間的切換
+
+AnimationClip
+控制物件、組件的屬性狀態
+
+由 Animator 組件，管理 AnimationClip
+可以置入多個 AnimationClip
+
+這個控制是有方向性的
+透過 Animator 的變數作為邏輯判斷，
+切換不同的 AnimationClip，並使用程式控制變數數值
+
+用來做控制的變數類型有：
+int =1
+float =1.5f
+bool =True/False
+trigger =On/Off
+
+選擇角色，點開 animation 視窗
+create 一個路徑 記得創建 animation資料夾 做整理
+製作一個 idle 動畫檔
+
+回到unity，將圖片拖曳到 animation 上，先一張就好
+可以在 animation 裡面按撥放預覽，另外你會在folder裡面看到兩個檔案
+可以將 idle 的 loopTime 取消勾選
+
+這時候切回角色，你會發現他自動幫你加好一個 animator component 了
+
+同樣的方式，在 animation 視窗，左邊下拉選單 create new clip
+對同一個物件(角色) 建立另外一組動畫
+這時候拖兩張圖，walk1 walk2，設定 0:00=walk1  0:10=walk2
+但注意! 這樣還是有點怪
+所以要複製一個 walk2 ，在 0:20=walk2，播起來就會自然
+
+接著，開 animator 視窗，要來設定變數與狀態邏輯
+1.可以先把狀態框位置調一調，滾輪可縮放
+2.左邊切到 parameter 頁籤，按 +號 新增一個 float 變數，自由命名，MoveSpeed
+
+[目的]如果 MoveSpeed > 0.1，則切換動畫狀態
+
+點idle框，右鍵 Make trasition，拉出一根箭頭到 movement
+點 這根箭頭，在右邊的 inspector 設定條件
+
+右邊可以看到 Condition 點 +號 新增一個條件：MoveSpeed greater 0.1
+
+Has Exit Time
+前一個動畫狀態，到特定時間，才切換動畫狀態
+通常是用在，跳躍、攻擊這種，需要完整播完動作的動畫上
+所以這個勾要取消 (jumi:因為我們希望不是看時間才切換，是看條件)
+
+這邊的設定請依照影片建議：
+Exit Time =1  (反灰不能改的話，先把 Has Exit Time 勾起來就可以改了，改完再不勾
+fix duration = 勾選
+trasition duration = 0
+trasition offset = 0
+interruption source = None
+
+-------------
+上述設定完了，需要再做 movement 回到 idle 的箭頭
+其他都一樣，條件設為 MoveSpeed < 0.1
+
+最後，到 animation資料夾 下，檢查一下，
+像 idle 的looptime就不用打勾，但是 movement 要打勾
+
+【注意】
+箭頭的 condition ，如果掛複數條件，就必定是 and，無法設定or
+
+【筆記】
+我改成
+設定條件變數 bool isMove = 0
+idle → move：isMove = true
+idle ← move：isMove = false    也是可以的哦!
+
+
+但是來回的條件要一致，不然會抖腳。
+// 還有向左/向右的條件要同一個，不然會抖腳 (切過去卻沒切回來)
+// How建議：
+可以先寫好狀態結構再製作，
+另外他好像有模糊的建議"把向左和向右分開寫"的概念
+
+
+-----------處理左轉倒退走的問題---------
+【位置】
+手動的話，你可以選擇角色
+	sprite Renderer/勾選左右反轉(Flip)
+
+那我們要用程式碼來處理這件事：
+	在向右的時候
+	m_SpriteRenderer.flipX = false;
+	在向左的時候
+	m_SpriteRenderer.flipX = true;
+
+	
+
+-----------聲音音效：觸發區域、產生/刪除物件--------
+Unity的物理分為兩種，一種叫做 Collider (碰撞)，一種叫做 Trigger (觸發)
+
+只掛 Collider 是沒有物理運算的，只有單純的碰撞
+要掛上 Rigidbody ，才會進行物理運算
+
+Trigger
+可以穿越的一個區域，比方說像是電動門(開關)、金幣、攻擊範圍
+會取消所有碰撞偵測
+isTrigger被勾選
+
+當 isTrigger 被打勾，會觸發下列三個方法
+兩個物件都具備 collider，其中一個物件具備 rigidbody
+void OnTriggerEnter2D(Collider2D other) - 接觸的那個影格
+void OnTriggerStay2D(Collider2D other) - 重疊
+void OnTriggerExit2D(Collider2D other) - 分開的那個影格
+
+接觸跟分開，都只會觸發一次，所以只需要一次的事件，可以設定在這兩種timing
+
+新增金幣，設定 collider2D，isTrigger打勾
+新增script，TriggerCoin
+在script，輸入：
+
+public class TriggerCoin:MonoBehaviour
+{
+	void OnTriggerEnter2D(Collider2D other)
+	{
+	Debug.Log(other.name);
+	}
+}
+
+製作一個音效的prefab (預置物)
+在unity中，除了場景製作好的物件組件，
+將遊戲物件弄到project中，利用腳本動態產生
+
+口譯：我們可以在場景先把物件做好，然後再把他做成prefab，
+這樣就可以用腳本動態產生，在需要的時候把他call出來
+
+所以我們現在要製作一個包含音效來源的物件
+
+拖進一個音效，改變他的接收聲音的範圍
+這範圍超級大，所以也可以直接在 3D / Max Distance ，裡面進行調整
+
+那他音效的概念是這樣：
+妳會有一個 AudioSource ，也會有一個 AudioListener
+AudioListener 要處在 AudioSource 的範圍內，才會聽得見。
+那 AudioListener 在哪呢? 他預設是掛在 mainCamera 上，
+也就是你有涵蓋到攝影機就聽得見聲音
+當然你也可以把 AudioListener 拖到角色身上，比方說像一些第三人稱射擊遊戲
+他會放在角色頭部，這樣如果角色的右邊有聲音，他才分辨的出聲音的來源方向
+
+
+製作完物件，就拖到project中製作成prefab，
+然後把場景中的原本那個物件刪掉(不然一開場他就撥了)
+然後使用腳本來動態call出prefab
+
+在遊戲場景中，實例化(產生)物件的方法
+Instantiate(Object original);
+
+1.在 void OnTriggerEnter2D(Collider2D other) {} 裡面，增加這一段
+
+    if(toucher.name == "mainCharacter")
+    {
+        Instantiate(soundObject);  // 產生指定的prefab
+    }
+2.在unity裡面，你會看到，剛剛我們掛在金幣物件上面的 TriggerCoin component
+除了可以掛腳本之外，還有一個欄位，叫做 Sound Object
+這是由於 public GameObject soundObject; 的關係
+這時候我們將剛剛製作好的音效prefab掛上去
+
+[等等]
+1.如果你只寫這樣，那麼只要妳重複trigger這個金幣，那音效物就會被一直clone出來
+2.他產生的位置，是prefab當初製作的位置，但這樣不對，他應該要跟金幣的位置相同
+
+Instantiate的方法重載 (overloading)
+
+Instantiate(soundObject, transform.position, Quaternion.identity );
+transform.position：//生在金幣所在處
+Quaternion.identity：Quaternion角度=空值
+
+
+Destroy 銷毀
+Destroy(Object target);
+Destroy(Object target, float time);  // 他會在幾秒後銷毀
+
+【使用實例】
+Destroy(this);  刪除腳本本身
+Destroy(gameObject);  刪除物件本身
+Destroy(GetComponent<Animator>());  刪除他身上掛著的動畫控制器
+
+在金幣上掛上 TriggerCoin
+在音效上掛上 Destroyself
+
+
+【網路建議】http://www.victsao.com/blog/97-unity/428-unity-script-destroy
+一般在使用Destroy 時，不會直接使用Destroy 來摧毀腳本所屬的物件。
+因為這會導致腳本本身也被刪除，如果這不是你想要的，你就得注意這一點。
+所以一般我們會在物件外的腳本參考要摧毀的物件，以進行摧毀物件的動作。
+
+
+--------------- 7 ---------------
+陣列(array)的宣告：
+public GameObject[] objName;
+
+尋找對應資料：
+objName[0]
+
+有得分感覺的音效 DM-CGS-
+7	12	15 18 26 28 45
+
+可以用 timeLine 做常見的音效調整
+
+【目的】吃三個金幣，然後出現旗子
+
+1.
+public GameObject[] CoinsArray;
+
+2.
+到面板設定長度，並把3顆金幣拖進去
+	拖法1.一個一個拖
+	拖法2.先把flag面板右上角鎖定，這樣inpector就不會亂跑，
+		  然後shift一次選三個金幣，一次拖到 CoinsArray 長度欄位
+		  拖完記得要把鎖頭打開!!!!!!
+		  
+debug.log要混和顯示字串和變數，用+號
+Debug.Log("CoinsArray.Length=長度："+CoinsArray.Length);
+
+
+【NOTE】
+find的部分：
+
+case1
+存在一個 prefab a，一個public物件變數A，並設定兩者連結
+先 instantiateA這個東西，然後這時  場上會 有一個Clone體 "a(Clone)"
+
+把這個Clone體 指派給一個暫時變數 var temp
+那妳就可以對她做一些事
+
+
+case2
+只存在一個場上物件A，預設是關閉， 一個public物件變數A，並設定兩者連結
+先 instantiateA這個東西，然後這時  場上會 有一個Clone體 "a(Clone)"
+這個a(Clone) 也是關閉的
+
+find這個Clone體的名稱 並 指派給一個暫時變數 var temp
+
+但妳無法對這個變數 temp做任何操作 (刪除 開啟 都不行)
+
+NullReferenceException: Object reference not set to an instance of an object
+ActiveArrayObjs.OnTriggerEnter2D(UnityEngine.Collider2D toucher)
+(at Assets / Script / ActiveArrayObjs.cs:82)
+
+------------8------------
+讓角色跳躍
+	Rigidbody Addforce
+判斷角色落地與離地
+	OnCollision2D
+	Foreach迴圈
+	物體標籤判斷
+	
+	
+
