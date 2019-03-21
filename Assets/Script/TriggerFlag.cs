@@ -12,9 +12,14 @@ public class TriggerFlag : MonoBehaviour
 
         if(toucher.name == "mainCharacter")
         {
-            var soundObj = Instantiate(soundObject, transform.position, Quaternion.identity);
             Destroy(gameObject);
-            Destroy(soundObj,1.2f);
+
+            var soundTarget = Instantiate(soundObject, transform.position, Quaternion.identity);
+            Destroy(soundTarget,2.0f);
+
+            // Instantiate(soundObject, transform.position, Quaternion.identity);
+            // var soundTarget = GameObject.Find("FlagTouch_DM-CGS-45(Clone)");
+            // Destroy(soundTarget,4.0f);
         }
     }
 }

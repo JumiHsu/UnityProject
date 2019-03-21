@@ -54,13 +54,14 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
-     <Compile Include="Assets\Script\ActiveArrayObjs.cs" />
+     <Compile Include="Assets\Script\ActiveArrayCoins.cs" />
      <Compile Include="Assets\Script\DestroySelf.cs" />
      <Compile Include="Assets\Script\mainCharacter.cs" />
-     <Compile Include="Assets\Script\mainCharacter_all_01.cs" />
      <Compile Include="Assets\Script\mainCharacter_localposition.cs" />
+     <Compile Include="Assets\Script\note\ActiveArrayCoins_note.cs" />
+     <Compile Include="Assets\Script\note\mainCharacter_all_01.cs" />
+     <Compile Include="Assets\Script\note\TriggerFlag_note.cs" />
      <Compile Include="Assets\Script\TriggerCoin.cs" />
-     <Compile Include="Assets\Script\TriggerCoin_note.cs" />
      <Compile Include="Assets\Script\TriggerFlag.cs" />
      <None Include="Assets\Demigiant\DOTweenPro\readme.txt" />
      <None Include="Assets\Demigiant\DemiLib\Core\DemiLib.xml" />
@@ -285,6 +286,24 @@
  <Reference Include="UnityEngine.SpatialTracking">
  <HintPath>D:/Perforce/UnityProctice/2018.3.7f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
  </Reference>
+ <Reference Include="DemiLib">
+ <HintPath>D:/Perforce/UnityProctice/UnityProject_moveNew/Assets/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
+ </Reference>
+ <Reference Include="DOTween">
+ <HintPath>D:/Perforce/UnityProctice/UnityProject_moveNew/Assets/Demigiant/DOTween/DOTween.dll</HintPath>
+ </Reference>
+ <Reference Include="DOTween43">
+ <HintPath>D:/Perforce/UnityProctice/UnityProject_moveNew/Assets/Demigiant/DOTween/DOTween43.dll</HintPath>
+ </Reference>
+ <Reference Include="DOTween46">
+ <HintPath>D:/Perforce/UnityProctice/UnityProject_moveNew/Assets/Demigiant/DOTween/DOTween46.dll</HintPath>
+ </Reference>
+ <Reference Include="DOTween50">
+ <HintPath>D:/Perforce/UnityProctice/UnityProject_moveNew/Assets/Demigiant/DOTween/DOTween50.dll</HintPath>
+ </Reference>
+ <Reference Include="DOTweenPro">
+ <HintPath>D:/Perforce/UnityProctice/UnityProject_moveNew/Assets/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Analytics.Editor">
  <HintPath>D:/Perforce/UnityProctice/UnityProject_moveNew/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
  </Reference>
@@ -293,24 +312,6 @@
  </Reference>
  <Reference Include="Unity.Analytics.Tracker">
  <HintPath>D:/Perforce/UnityProctice/UnityProject_moveNew/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
- </Reference>
- <Reference Include="DOTween46">
- <HintPath>D:/Perforce/UnityProctice/UnityProject_moveNew/Assets/Demigiant/DOTween/DOTween46.dll</HintPath>
- </Reference>
- <Reference Include="DOTween50">
- <HintPath>D:/Perforce/UnityProctice/UnityProject_moveNew/Assets/Demigiant/DOTween/DOTween50.dll</HintPath>
- </Reference>
- <Reference Include="DemiLib">
- <HintPath>D:/Perforce/UnityProctice/UnityProject_moveNew/Assets/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
- </Reference>
- <Reference Include="DOTween43">
- <HintPath>D:/Perforce/UnityProctice/UnityProject_moveNew/Assets/Demigiant/DOTween/DOTween43.dll</HintPath>
- </Reference>
- <Reference Include="DOTween">
- <HintPath>D:/Perforce/UnityProctice/UnityProject_moveNew/Assets/Demigiant/DOTween/DOTween.dll</HintPath>
- </Reference>
- <Reference Include="DOTweenPro">
- <HintPath>D:/Perforce/UnityProctice/UnityProject_moveNew/Assets/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>D:/Perforce/UnityProctice/2018.3.7f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
