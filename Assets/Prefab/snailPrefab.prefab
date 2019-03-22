@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7634027670829685891}
   - component: {fileID: 7634027670829685890}
   - component: {fileID: 7634027670829685892}
+  - component: {fileID: 4594405784371492639}
   m_Layer: 0
   m_Name: snailPrefab
   m_TagString: Untagged
@@ -99,3 +100,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4594405784371492639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7634027670829685889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d166451bf03d917459d31592988d15ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

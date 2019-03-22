@@ -70,7 +70,7 @@ public class ActiveArrayCoins : MonoBehaviour
             Instantiate(mosterSnail, box_position.transform.position, Quaternion.identity);
 
             // 如果你想殺他
-            var Snail_Temp = Instantiate(mosterSnail, transform.position, Quaternion.identity);
+            var Snail_Temp = Instantiate(mosterSnail, new Vector3(0, -0.2f, 0), Quaternion.identity);
             Destroy(Snail_Temp,2.0f);  //這樣你就可以殺他
 
 

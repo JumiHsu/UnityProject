@@ -3,23 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class mainCharacter : MonoBehaviour
+public class mainCharacter_force : MonoBehaviour
 {
     // 為了要取得 Animator 的 component，所以先做一個 m_Animator
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_Animator;
     private SpriteRenderer m_SpriteRenderer;
-    private Transform m_transform;
 
     public float moveSpeed = 3.5f;
     public Vector2 moveDir;
-    
+
     public float jumpForce = 750.0f;
-
-    public float jumpSpeed = 5.0f;
-    public Vector2 jumpDir;
-
-
 
     void Awake()
     {
@@ -32,41 +26,56 @@ public class mainCharacter : MonoBehaviour
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_Animator = GetComponent<Animator>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
-        m_transform = GetComponent<Transform>();  // 是初始位置，還是是一個會持續變更值的容器?
     }
 
-    
+
 
     void Update()
     {
         // 物理方式移動(而不是單純位移)：設定向量速度 = 給他一個方向向量作為推動的力量
 
-        // 按住右
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow))  // 按住右
         {
-            // m_Rigidbody2D.velocity = new Vector2(moveSpeed,0);
             moveDir.x = moveSpeed;
-
-            // 處理轉向
-            m_Animator.SetBool("isMove", true);
+            m_Animator.SetBool("isMove", true);  // 處理轉向
             m_SpriteRenderer.flipX = false;
-
         }
-        // 按住左
-        if (Input.GetKey(KeyCode.LeftArrow))
+        
+        if (Input.GetKey(KeyCode.LeftArrow))  // 按住左
         {
-            // m_Rigidbody2D.velocity = new Vector2(-moveSpeed, 0);
             moveDir.x = -moveSpeed;
-            
-            // 處理轉向
+            m_Animator.SetBool("isMove", true);  // 處理轉向
             m_SpriteRenderer.flipX = true;
-            m_Animator.SetBool("isMove", true);
         }
 
         // 放開右 || 放開左
         if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow))
         {
             moveDir = Vector2.zero;
+            m_Animator.SetBool("isMove", false);
+        }
+
+        // 按下空白
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            m_Rigidbody2D.velocity = new Vector2(0, 3);
+
+            m_Animator.SetBool("isMove", true);
+            // 要怎樣才能寫出不會連跳
+            // if (transform.position.y == m_transform.localPosition.y + jumpSpeed)
+            // {
+            //     jumpSpeed = 0;
+            // }
+        }
+        // 放開空白
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            m_Rigidbody2D.velocity = new Vector2(0, -3 * 0.2f); //如果不寫分段，直接*0.5會太怪異
+                                                                        // m_Rigidbody2D.velocity = Vector2.zero;
+                                                                        // jumpDir = Vector2.zero;
+                                                                        // moveDir = Vector2.zero;
+
+            // 放開空白就恢復idle很怪，應該要加上條件：當高度=多少
             m_Animator.SetBool("isMove", false);
         }
 
@@ -81,32 +90,6 @@ public class mainCharacter : MonoBehaviour
 
 
 
-        // 按下空白
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            m_Rigidbody2D.velocity = new Vector2(0, jumpSpeed);
-            // moveDir.y = jumpSpeed;
-            // jumpDir.y = jumpSpeed;
-
-            m_Animator.SetBool("isMove", true);
-            // 要怎樣才能寫出不會連跳
-            // if (transform.position.y == m_transform.localPosition.y + jumpSpeed)
-            // {
-            //     jumpSpeed = 0;
-            // }
-        }
-        // 放開空白
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            m_Rigidbody2D.velocity = new Vector2(0, -jumpSpeed*0.2f); //如果不寫分段，直接*0.5會太怪異
-            // m_Rigidbody2D.velocity = Vector2.zero;
-            // jumpDir = Vector2.zero;
-            // moveDir = Vector2.zero;
-            
-            // 放開空白就恢復idle很怪，應該要加上條件：當高度=多少
-            m_Animator.SetBool("isMove", false);
-        }
-
         // jumpDir.y = m_Rigidbody2D.velocity.y;
         // m_Rigidbody2D.velocity = jumpDir;
 
@@ -117,12 +100,12 @@ public class mainCharacter : MonoBehaviour
         // 向後(左)跳，向前(右)跳 = 按住+按住
         if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.RightArrow))
         {
-            m_Rigidbody2D.velocity = new Vector2(moveSpeed, jumpSpeed);
+            m_Rigidbody2D.velocity = new Vector2(moveSpeed, 3);
         }
 
         if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.LeftArrow))
         {
-            m_Rigidbody2D.velocity = new Vector2(-moveSpeed, jumpSpeed * 0.5f);
+            m_Rigidbody2D.velocity = new Vector2(-moveSpeed, 3 * 0.5f);
         }
 
 

@@ -351,5 +351,35 @@ ActiveArrayObjs.OnTriggerEnter2D(UnityEngine.Collider2D toucher)
 	Foreach迴圈
 	物體標籤判斷
 	
-	
+
+Vector2 Rigidbody.velocity
+m_Rigidbody2D.velocity = Vector2.right
+m_Rigidbody2D.velocity = Vector2.up        ---這個是單純給一個向上的力
+
+void Rigidbody.AddForce (Vector3 force)
+m_Rigidbody2D.AddForce(Vector2.up);        ---這個是給一個向上的力 + 向下的重力
+
+
+不錯的一篇心得：https://tinyfeather1997.wordpress.com/2018/04/25/2018-04-24%E4%BA%8C-%E5%89%9B%E9%AB%94%E7%9A%84addforce%E8%88%87velocity/
+AddForce的效果會受到施力時間、物體質量等特性影響
+Velocity則是直接指定物體的速度
+
+//這幾種寫法都可以，都是給一個向量，
+只是一種是將此向量作為速度去給予(不計重力)
+m_Rigidbody2D.velocity = new Vector2(0, jumpSpeed);
+
+一種是將此向量作為一種物理上的力，差別在force會與向下的重力效果一起計算
+m_Rigidbody2D.AddForce(Vector2.up * jumpForce);
+m_Rigidbody2D.AddForce(new Vector2 (0,1) * jumpForce);
+m_Rigidbody2D.AddForce(new Vector2(0, jumpForce));
+
+
+
+
+
+
+
+
+
+
 
