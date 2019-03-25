@@ -54,8 +54,6 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
-     <Compile Include="Assets\MainCharacter_force.cs" />
-     <Compile Include="Assets\SC.cs" />
      <Compile Include="Assets\Script\ActiveArrayCoins.cs" />
      <Compile Include="Assets\Script\DestroySelf.cs" />
      <Compile Include="Assets\Script\mainCharacter.cs" />
@@ -63,6 +61,7 @@
      <Compile Include="Assets\Script\mainCharacter_localposition.cs" />
      <Compile Include="Assets\Script\note\ActiveArrayCoins_note.cs" />
      <Compile Include="Assets\Script\note\mainCharacter_all_01.cs" />
+     <Compile Include="Assets\Script\note\MainCharacter_force_ub01.cs" />
      <Compile Include="Assets\Script\note\TriggerFlag_note.cs" />
      <Compile Include="Assets\Script\snail_Behaviour.cs" />
      <Compile Include="Assets\Script\TriggerCoin.cs" />
