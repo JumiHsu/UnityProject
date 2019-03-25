@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainCharacter_force : MonoBehaviour
+public class MainCharacter_force_ub01 : MonoBehaviour
 {
     // 為了要取得 Animator 的 component，所以先做一個 m_Animator
     private Rigidbody2D m_Rigidbody2D;
@@ -75,6 +75,7 @@ public class MainCharacter_force : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow))
         {
             moveDir = Vector2.zero;
+            // moveDir.x = 0;
             m_Animator.SetBool("isMove", false);
         }
 
