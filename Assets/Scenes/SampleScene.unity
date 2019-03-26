@@ -594,7 +594,7 @@ GameObject:
   - component: {fileID: 1207508646}
   m_Layer: 0
   m_Name: grassMid
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -701,7 +701,7 @@ GameObject:
   - component: {fileID: 1281056706}
   m_Layer: 0
   m_Name: box
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -971,6 +971,8 @@ MonoBehaviour:
   jumpForce: 350
   jumpSpeed: 5
   jumpDir: {x: 0, y: 0}
+  isGrounded: 0
+  groundedObj: {fileID: 0}
 --- !u!1 &1781894925
 GameObject:
   m_ObjectHideFlags: 0
@@ -1344,7 +1346,7 @@ GameObject:
   - component: {fileID: 1945874034}
   m_Layer: 0
   m_Name: box_unpush
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

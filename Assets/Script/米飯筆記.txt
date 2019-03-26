@@ -374,11 +374,95 @@ m_Rigidbody2D.AddForce(new Vector2 (0,1) * jumpForce);
 m_Rigidbody2D.AddForce(new Vector2(0, jumpForce));
 
 
+****** 關於我一直處理不好的角色跳躍問題 ********
+【米飯】#8 5:48
+應該把動作結構分成
+初始    →idle←→移動
+          ↑   ↗
+anyState→ 跳躍
 
 
+但我覺得應該是
+初始    →idle←→移動←→idle
+          ↓↑   ↗↙
+          跳躍
+
+試試看!
 
 
+【關於著地】
+網路上的判斷著地：
+isGround = Physics.Raycast(transform.position, -Vector3.up, 0.2f);
 
+https://www.youtube.com/watch?v=Wm2DqFfxhKc
+高偉軒：請問有時候原地跳躍時不會有跳躍的動畫是怎麼回事，如23:22??﻿
+白米飯：這個範例其實有這個問題，我後來有發現，
+地面接觸的判斷用這個教學的方式會有機率出現這問題。
+很不好意思，如果延伸去看其他教學，他們會改用raycast overlap去處理地面判斷。﻿
+
+
+很爛的判斷著地：
+isGround = transform.position.y < 0.115f == true ;
+
+使用這下列方法判斷：
+void OnCollisionEnter2D(Collider2D mainCharacter)
+void OnCollisionStay2D(Collider2D mainCharacter)
+void OnCollisionExit2D(Collider2D mainCharacter)
+
+離開地面→觸發Exit
+踩上箱子→觸發Enter
+在箱子上停留→保持觸發Stay
+
+void OnCollisionStay2D(Collider2D mainCharacter)
+
+#8 14:00 這一段不懂
+// 考慮到，有時候你會踩在不只一個collider上
+□●
+﹉﹉   像這樣，你會同時左邊碰到箱子，腳下踩著地板
+這樣就同時會有兩個接觸位置 (所以要設定成向量把他丟進去)
+Y=0 碰到箱子的旁邊
+Y=1 碰到地面的上面
+Y=-1 碰到某個方塊的底部 (WHY)
+
+Collider2D.contacts
+mainCharacter.contacts
+
+ContactPoint2D[] contacts   // contacts是一個陣列
+contacts[index].normal
+
+原本應該這樣寫：
+for (int i=0; i< mainCharacter.contacts.Length;i++)
+{
+	Debug.Log(mainCharacter.contacts[i].normal);
+}
+
+可以改用 foreach 改寫為：
+foreach (ContactPoint2D element in mainCharacter.contacts)
+{
+	Debug.Log(element.normal);
+}
+
+結構：
+foreach (型別 element in array)
+{
+	對每個元素 do something ;
+}
+
+
+另外，我們需要對物件設定標籤"Ground"
+才能判斷哪些collider是地面
+
+選物件，新增一個tag
+你也可以一次選很多物件，一起變更tag
+
+public bool GameObject.CompareTag(string tag)
+
+void OnCollisionStay2D (Collider2D other)
+{
+	if (other.gameObject.CompareTag("Ground"))
+	{
+	}
+}
 
 
 
