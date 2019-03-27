@@ -466,4 +466,9 @@ void OnCollisionStay2D (Collider2D other)
 
 
 
+Question
+1. jump設定為非loop，trigger沒有觸發，按下SPACE就可以跳
+   但他跳了就離開不了跳躍狀態
+
+
 
