@@ -12,26 +12,22 @@ public class MainCharacter_force : MonoBehaviour
 
     public float moveSpeed = 3.5f;
     public Vector2 moveDir;
-
     public float jumpForce = 350.0f;
-
-    public float jumpSpeed = 5.0f;
-    public Vector2 jumpDir;
-
 
     public bool isGroundRaycast;  // 用raycast來判斷，但沒作用
     public bool isGroundPosY;  // 用高度來判斷，很爛，但有作用
     public bool isGrounded = false;  // 用接觸的物件的tag來判斷，但沒作用
-    
+
     public GameObject groundedObj;  //判斷踩著的物體是什麼
     public ContactPoint2D[] contacts;  // contacts是一個陣列
 
-    
+
 
     void Awake()
     {
         Debug.Log("林克醒醒");
     }
+
 
 
     void Start()
@@ -42,13 +38,14 @@ public class MainCharacter_force : MonoBehaviour
         m_transform = GetComponent<Transform>();  // 是初始位置，還是是一個會持續變更值的容器?
     }
 
+
+
         // 移動方式1：定義此物件的移動速度向量，而不是單純位移
         // m_Rigidbody2D.velocity = new Vector2(-moveSpeed, 0);
         // 跳躍方式1：定義此物件的移動速度向量 (不計重力)
         // m_Rigidbody2D.velocity = new Vector2(0, jumpSpeed);
         // 跳躍方式2：對物件給予一個物理上的力(一個方向向量)，跟1的差別在，force會與向下的重力效果一起計算
         // m_Rigidbody2D.AddForce(Vector2.up * jumpForce);
-
     void Update()
     {
         // 按住右
@@ -57,7 +54,6 @@ public class MainCharacter_force : MonoBehaviour
             moveDir.x = moveSpeed;
             m_SpriteRenderer.flipX = false;  // 處理轉向
             m_Animator.SetBool("isMove", true);
-
         }
         // 按住左
         if (Input.GetKey(KeyCode.LeftArrow))
@@ -66,7 +62,6 @@ public class MainCharacter_force : MonoBehaviour
             m_SpriteRenderer.flipX = true;
             m_Animator.SetBool("isMove", true);
         }
-
         // 放開右 || 放開左
         if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow))
         {
@@ -75,17 +70,14 @@ public class MainCharacter_force : MonoBehaviour
         }
 
 
-        // isGroundPosY = 這個條件不好，設定在空中無法按下space，雖可以阻止連跳，但會讓角色無法站在箱子上跳躍
-        // isGrounded = 這個條件沒有發動
-        // isGroundRaycast = 這個條件沒有發動
-
-        // 不做離地判斷 = 用重力的話，其實還是可在空中連跳(且越跳越高)，但會因為重力的影響，而沒那麼容易越跳越高
-        if (Input.GetKeyDown(KeyCode.Space) )
+        // isGroundRaycast = 最好的條件
+        // isGroundPosY = 不好，設定在空中無法按下space，雖可以阻止連跳，但會讓角色無法站在箱子上跳躍
+        // isGrounded = 沒有發動
+        if (Input.GetKeyDown(KeyCode.Space) && isGroundRaycast)
         {
-            m_Rigidbody2D.AddForce(Vector2.up * jumpForce);  //new Vector2 (0,1) * jumpForce=new Vector2(0, jumpForce)
-            m_Animator.SetBool("isGround", false);
-
-            m_Animator.SetTrigger("jumpTrigger");  // 這一步沒有作用
+            m_Rigidbody2D.AddForce(Vector2.up * jumpForce);  //= (0,1)*jumpForce = (0, jumpForce)
+            m_Animator.SetTrigger("jumpTrigger");
+            Debug.Log("jumpTrigger的狀態為：" + m_Animator.GetBool("jumpTrigger"));
         }
 
 
@@ -101,49 +93,49 @@ public class MainCharacter_force : MonoBehaviour
 
         //每秒都判斷是否離地
         //1 用 OnCollisionStay 判斷觸及的物件tag
-        // m_Animator.SetBool("isGround", isGrounded);
-
-        if (isGrounded)
-        {
-            Debug.Log("此條件成立：isGround");
-            m_Animator.SetBool("isGround", true);
-        }
-
+        m_Animator.SetBool("isGround", isGrounded);
+        // if (isGrounded)
+        // {
+            // m_Animator.SetBool("isGround", true);
+        // }
 
 
         //2 判斷 y是否 < 0.115f
         if (transform.position.y < 0.115f)
         {
             isGroundPosY = true;
-            m_Animator.SetBool("isGround", true);
+            // m_Animator.SetBool("isGround", true);
         }
         else
         {
             isGroundPosY = false;
-            m_Animator.SetBool("isGround", false);  //不關的話會變成 落地過程後如果沒有再跳 = isG開啟 = 
+            // m_Animator.SetBool("isGround", false);  //不只是跳的那一下=離地，落地中也應該要是離地
         }
 
 
-        //3 判斷 接觸點打出的射線
-        if (Physics.Raycast(transform.position, -Vector3.up, 0.2f))
+        //3 判斷 接觸點打出的射線 - 他會總是打的到人
+        if (Physics2D.Raycast(transform.position, -Vector2.up, 1.0f))
         {
+            // Debug.DrawLine(startPoint, endPoint, Color.red);
             isGroundRaycast = true;
             m_Animator.SetBool("isGround", true);
         }
         else
         {
             isGroundRaycast = false;
+            m_Animator.SetBool("isGround", false);  //不只是跳的那一下=離地，落地中也應該要是離地
         }
     }
 
 
     void OnCollisionStay(Collision2D other)
     {
+        Debug.Log("此方法有效 = void OnCollisionStay(Collision2D other)");
         if (other.gameObject.CompareTag("Ground"))  // 判斷踩著的物體是不是Ground，是的話：就判斷一下他的normal值的y是多少
         {
-            foreach (ContactPoint2D element in other.contacts)
+            Debug.Log("【STAY】有抓到停留著的接觸物的tag = Ground");
+            foreach (ContactPoint2D element in other.contacts)  //element是接觸點相關資訊，其中一個資訊是接觸點法線normal
             {
-                Debug.Log("element.normal.y 的值 =" + element.normal.y);
                 if (element.normal.y > 0.25f)
                 {
                     isGrounded = true;
@@ -157,17 +149,25 @@ public class MainCharacter_force : MonoBehaviour
     // This message parameter has to be of type: Collision
     // The message will be ignored.
 
-
+    // 這樣有作用!
     void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject == groundedObj)
+        Debug.Log("【EXIT】有抓到停留著的接觸物的tag = Ground");
+        if (other.gameObject.CompareTag("Ground"))
         {
             groundedObj = null;
             isGrounded = false;
-            Debug.Log("other.gameObject == groundedObj成立!!");
         }
     }
 
-
+    // 原本寫法：但因為 groundedObj 為空，所以就不這樣寫
+    // void OnCollisionExit2D(Collision2D other)
+    // {
+    //     if (other.gameObject == groundedObj)
+    //     {
+    //         groundedObj = null;
+    //         isGrounded = false;
+    //     }
+    // }
 
 }
