@@ -71,14 +71,24 @@ public class MainCharacter_force : MonoBehaviour
 
 
         // isGroundRaycast = 最好的條件
+        // isGrounded = 沒加2D所以壞掉，已修復
         // isGroundPosY = 不好，設定在空中無法按下space，雖可以阻止連跳，但會讓角色無法站在箱子上跳躍
-        // isGrounded = 沒有發動
         if (Input.GetKeyDown(KeyCode.Space) && isGroundRaycast)
         {
             m_Rigidbody2D.AddForce(Vector2.up * jumpForce);  //= (0,1)*jumpForce = (0, jumpForce)
             m_Animator.SetTrigger("jumpTrigger");
             Debug.Log("jumpTrigger的狀態為：" + m_Animator.GetBool("jumpTrigger"));
         }
+
+
+        // 本來以為會像游泳，結果發現比較像是滑翔性的飛
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            m_Rigidbody2D.AddForce(Vector2.up * jumpForce * 0.5f);
+            m_Animator.SetTrigger("swimTrigger");
+            Debug.Log("swimTrigger的狀態為：" + m_Animator.GetBool("swimTrigger"));
+        }
+
 
 
         // 目的：讓當前的 Rigidbody2D 重力(x,y)，x等於你方向鍵的力，y=他原先的重力
@@ -94,26 +104,20 @@ public class MainCharacter_force : MonoBehaviour
         //每秒都判斷是否離地
         //1 用 OnCollisionStay 判斷觸及的物件tag
         m_Animator.SetBool("isGround", isGrounded);
-        // if (isGrounded)
-        // {
-            // m_Animator.SetBool("isGround", true);
-        // }
 
 
         //2 判斷 y是否 < 0.115f
         if (transform.position.y < 0.115f)
         {
             isGroundPosY = true;
-            // m_Animator.SetBool("isGround", true);
         }
         else
         {
             isGroundPosY = false;
-            // m_Animator.SetBool("isGround", false);  //不只是跳的那一下=離地，落地中也應該要是離地
         }
 
 
-        //3 判斷 接觸點打出的射線 - 他會總是打的到人
+        //3 判斷 接觸點打出的射線 - 他會總是打的到人：改成 Physics2D即可
         if (Physics2D.Raycast(transform.position, -Vector2.up, 1.0f))
         {
             // Debug.DrawLine(startPoint, endPoint, Color.red);
@@ -128,12 +132,10 @@ public class MainCharacter_force : MonoBehaviour
     }
 
 
-    void OnCollisionStay(Collision2D other)
+    void OnCollisionStay2D(Collision2D other)
     {
-        Debug.Log("此方法有效 = void OnCollisionStay(Collision2D other)");
         if (other.gameObject.CompareTag("Ground"))  // 判斷踩著的物體是不是Ground，是的話：就判斷一下他的normal值的y是多少
         {
-            Debug.Log("【STAY】有抓到停留著的接觸物的tag = Ground");
             foreach (ContactPoint2D element in other.contacts)  //element是接觸點相關資訊，其中一個資訊是接觸點法線normal
             {
                 if (element.normal.y > 0.25f)
@@ -148,26 +150,16 @@ public class MainCharacter_force : MonoBehaviour
     // Script error: OnCollisionStay
     // This message parameter has to be of type: Collision
     // The message will be ignored.
+    // 是我 方法名稱 寫錯了，應該要加上 2D
 
-    // 這樣有作用!
+
     void OnCollisionExit2D(Collision2D other)
     {
-        Debug.Log("【EXIT】有抓到停留著的接觸物的tag = Ground");
-        if (other.gameObject.CompareTag("Ground"))
+        if (other.gameObject == groundedObj)
         {
             groundedObj = null;
             isGrounded = false;
         }
     }
-
-    // 原本寫法：但因為 groundedObj 為空，所以就不這樣寫
-    // void OnCollisionExit2D(Collision2D other)
-    // {
-    //     if (other.gameObject == groundedObj)
-    //     {
-    //         groundedObj = null;
-    //         isGrounded = false;
-    //     }
-    // }
 
 }

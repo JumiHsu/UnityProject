@@ -455,20 +455,63 @@ foreach (型別 element in array)
 選物件，新增一個tag
 你也可以一次選很多物件，一起變更tag
 
-public bool GameObject.CompareTag(string tag)
+    void OnCollisionStay2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Ground"))  // 判斷踩著的物體是不是Ground，是的話：就判斷一下他的normal值的y是多少
+        {
+            foreach (ContactPoint2D element in other.contacts)  //element是接觸點相關資訊，其中一個資訊是接觸點法線normal
+            {
+                if (element.normal.y > 0.25f)
+                {
+                    isGrounded = true;
+                    groundedObj = other.gameObject;  //如果踩著的物體，他的tag是 ground，就把他指派給 groundedObj
+                    break;
+                }
+            }
+        }
+    }
+    // Script error: OnCollisionStay
+    // This message parameter has to be of type: Collision
+    // The message will be ignored.
+    // 是我 方法名稱 寫錯了，應該要加上 2D
 
-void OnCollisionStay2D (Collider2D other)
-{
-	if (other.gameObject.CompareTag("Ground"))
-	{
-	}
-}
+
+    void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject == groundedObj)
+        {
+            groundedObj = null;
+            isGrounded = false;
+        }
+    }
+
+
+------------ 9 -----------
+基本的UI介面編輯
+控制不同腳本內的方法與變數
+使用全域變數與單例
+
+Hierarchy/右鍵/UI/image
+這樣就會創一個canvas，下面掛UI的東西(image)
+
+
+設置錨點(Anchor) #9 3:30
+用文字實在很難表達
+
+將金幣 hudCoin 設置在左上角
+設置好後，Pos (x ,y) = (100 ,-100)
+
+新增text，一樣要記得設置錨點
 
 
 
-Question
-1. jump設定為非loop，trigger沒有觸發，按下SPACE就可以跳
-   但他跳了就離開不了跳躍狀態
+
+
+
+
+
+
+
 
 
 
