@@ -487,7 +487,7 @@ foreach (型別 element in array)
 
 
 ------------ 9 -----------
-基本的UI介面編輯
+---基本的UI介面編輯---
 控制不同腳本內的方法與變數
 使用全域變數與單例
 
@@ -495,13 +495,120 @@ Hierarchy/右鍵/UI/image
 這樣就會創一個canvas，下面掛UI的東西(image)
 
 
-設置錨點(Anchor) #9 3:30
+---設置錨點(Anchor)--- #9 3:30
 用文字實在很難表達
 
 將金幣 hudCoin 設置在左上角
 設置好後，Pos (x ,y) = (100 ,-100)
 
 新增text，一樣要記得設置錨點
+
+---設置 UI自適應 (Canvas Scaler)--- #9 7:00
+概念：避免當螢幕縮小，人物等等的東西都跟著縮小，但UI元件還是很大的情況
+
+到 canvas下面 (已經預設掛好了) 的 canvas scaler component
+mode scale with screen size
+reference resokution 1920*1080
+
+
+---建立 panel 和文字---
+在canvas下，建立一個panel
+可以看到panel是一種九宮格結構的灰色半透明圖
+可以任意放大縮小
+在panel下建立一個文字，這時候我發現，如果要調整文字的範圍
+左上的工具列：
+Scale Tool：字會變模糊，有點像是不改變像素的放大
+			可是可以完美的置中
+Rect Tool ：字不會變模糊，有點像是向量放大，
+			但如果希望完美的置中，要另外再找功能對齊置中
+
+調整好文字大小，把整個panel先取消勾選
+
+
+---全域變數：透過 GameManager統一管理行為---
+
+---控制不同腳本的變數和方法---
+修飾詞範例觀念程式化 - public
+
+你要在 A類別 裡面的方法，去呼叫 B類別的方法 的話
+那你要記得把B類別的方法 設定成 public
+
+class 你:魔獸世界玩家
+{
+	public int money
+	
+	void 買裝備()
+	{
+	確認要買的裝備;
+	確認自己的金錢>裝備價格;
+	扣除自己的金錢;
+	}
+}
+
+
+class 你的網婆:魔獸世界玩家
+{
+	private int money
+	
+	void 買裝備()
+	{
+	確認要買的裝備;
+	找到你的金錢;
+	確認你的金錢>裝備價格;
+	扣除你的金錢;
+	}
+}
+
+
+【實際操作】
+1.
+先建立一個空物件，命名叫做 GameManager
+然後在上面掛一個script 叫做 GameManager.cs
+注意! 如果可以的話，將cs檔一開始就建立在對的folder下
+
+建立一個分數變數，並且是公開的，起始預設=0分
+public int gameScore=0;
+
+2.
+打開 triggerCoin.cs
+先引用 GameManager 這個類別，命名為 _GameManager
+public GameManager _GameManager;
+
+本來我們就有做 "當主角進入trigger區域的時候，摧毀金幣"這件事
+現在多做一件事，就是
+_GameManager.gameScore += 1;
+
+3-1.
+回到unity，將 gamemanager 物件 指派給 三顆coin的 game manager 欄位
+(注意 是指派"hierachy中的物件" 不是"asset中的script"!!)
+
+這時候如果你play，就會看到吃金幣的時候
+gamemanager 的 score會有變化了
+
+【但是!!】
+3-2.
+如果妳遊戲中有很多邏輯、物件、腳本
+你每個都這樣拖拉上去，管控起來會很亂
+
+所以! 在要被別人使用的變數上，加上 static
+就可以直接在腳本中被使用了哦! (就不用拖拉)
+
+	將 GameManager.cs 中的變數，改定義為
+		public static int gameScore = 0;
+
+	將 triggerCoin.cs 中
+		刪除 public GameManager _GameManager;
+		刪除 _GameManager.gameScore += 1;
+		改為 GameManager.gameScore += 1;
+	
+【但是!!】
+3-3.
+這樣還是會面臨，變數一多，你就會有一整排的 static
+所以要改用
+
+[單例]
+透過 Singleton ，利於特定行為、變數的直接溝通
+
 
 
 
