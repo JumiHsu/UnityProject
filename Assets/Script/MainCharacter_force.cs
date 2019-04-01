@@ -21,7 +21,10 @@ public class MainCharacter_force : MonoBehaviour
     public GameObject groundedObj;  //判斷踩著的物體是什麼
     public ContactPoint2D[] contacts;  // contacts是一個陣列
 
+    public ContactPoint2D[] hurtContacts;  // contacts是一個陣列
+    public float hurtForce = 1000.0f;
 
+    public static Vector2[] normalContacts;
 
     void Awake()
     {
@@ -82,7 +85,7 @@ public class MainCharacter_force : MonoBehaviour
 
 
         // 本來以為會像游泳，結果發現比較像是滑翔性的飛
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             m_Rigidbody2D.AddForce(Vector2.up * jumpForce * 0.5f);
             m_Animator.SetTrigger("swimTrigger");
@@ -146,11 +149,24 @@ public class MainCharacter_force : MonoBehaviour
                 }
             }
         }
+
+
+        if (other.gameObject.CompareTag("Monster"))  // 判斷踩著的物體是不是Monster，是的話：給他一個法線方向的力
+        {
+            m_Rigidbody2D.AddForce(other.contacts[0].normal * hurtForce);
+            Debug.Log("被藍色史萊姆彈開了!");
+
+            for (int i=0; i<=other.contacts.Length; i++) {
+                Debug.Log(other.contacts[i].normal);
+                normalContacts[i] = other.contacts[i].normal;
+            }
+        }
     }
     // Script error: OnCollisionStay
     // This message parameter has to be of type: Collision
     // The message will be ignored.
     // 是我 方法名稱 寫錯了，應該要加上 2D
+
 
 
     void OnCollisionExit2D(Collision2D other)
@@ -161,5 +177,7 @@ public class MainCharacter_force : MonoBehaviour
             isGrounded = false;
         }
     }
+
+
 
 }

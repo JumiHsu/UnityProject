@@ -609,8 +609,74 @@ gamemanager 的 score會有變化了
 [單例]
 透過 Singleton ，利於特定行為、變數的直接溝通
 
+概念
+class 啾咪:人類
+{
+public static 啾咪 _啾咪;
+public int 金錢;
+public Vector2 位置;
+
+void 買東西()
+	{
+	確認目標物
+	找到香蕉娜娜
+	扣香蕉娜娜的錢
+	}
+
+void 開門()
+	{
+	拿出鑰匙
+	開門
+	}
+}
+
+class 香蕉娜娜:人類
+{
+public int 金錢;
+
+void 買東西()
+	{
+	確認目標物
+	_啾咪.金錢 -=1;
+	}
+
+void 移動()
+	{
+	確認座標 = _啾咪.位置;
+	走到座標位置;
+	}
+	
+void 開門()
+	{
+	_啾咪.開門();
+	}
+}
 
 
+【目的】
+分數增加
+分數判斷
+分數在UI上顯示
+新增方法(void)
+並傳入分數數值
+
+
+<GameManager.csd>
+因為需要改UI上的數字，所以需要引入：
+using UnityEngine.UI;
+
+其他部分開CS檔查看
+
+
+<TriggerCoin.cs>
+直接引用 GameManager 的 instance：
+GameManager.instance.GetScore(1);
+
+
+<Unity>
+GameManager上要設定兩個欄位
+TargetUI -> 把 panel物件 拉進去，記得panel要關著
+TargetText -> 把Canvas下的text拉進去
 
 
 

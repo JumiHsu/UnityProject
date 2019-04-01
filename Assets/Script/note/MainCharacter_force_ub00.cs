@@ -147,7 +147,7 @@ public class MainCharacter_force_ub00 : MonoBehaviour
     }
 
 
-    void OnCollisionStay(Collision2D other)
+    void OnCollisionStay2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground"))  // 判斷踩著的物體是不是Ground，是的話：就判斷一下他的normal值的y是多少
         {

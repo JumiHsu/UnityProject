@@ -13,7 +13,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
   </PropertyGroup>
@@ -57,15 +57,16 @@
      <Compile Include="Assets\Script\ActiveArrayCoins.cs" />
      <Compile Include="Assets\Script\DestroySelf.cs" />
      <Compile Include="Assets\Script\GameManager.cs" />
-     <Compile Include="Assets\Script\mainCharacter.cs" />
      <Compile Include="Assets\Script\MainCharacter_force.cs" />
      <Compile Include="Assets\Script\mainCharacter_localposition.cs" />
      <Compile Include="Assets\Script\note\ActiveArrayCoins_note.cs" />
+     <Compile Include="Assets\Script\note\mainCharacter.cs" />
      <Compile Include="Assets\Script\note\mainCharacter_all_01.cs" />
      <Compile Include="Assets\Script\note\MainCharacter_force_ub00.cs" />
      <Compile Include="Assets\Script\note\MainCharacter_force_ub01.cs" />
      <Compile Include="Assets\Script\note\MainCharacter_force_ub02.cs" />
      <Compile Include="Assets\Script\note\TriggerFlag_note.cs" />
+     <Compile Include="Assets\Script\slimeBlue.cs" />
      <Compile Include="Assets\Script\snail_Behaviour.cs" />
      <Compile Include="Assets\Script\TriggerCoin.cs" />
      <Compile Include="Assets\Script\TriggerFlag.cs" />
