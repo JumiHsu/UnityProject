@@ -13,31 +13,41 @@ public class GameManager : MonoBehaviour
     public GameObject loseUI;
     public Text coinText;
     public Text HPText;
+    private float timer = 0.0f;
 
     void Awake() {
         if(instance == null) {
             instance = this;
         }
     }
-    
-    // void GetCoin() {
-    //     GameManager.instance.gameScore += 1;
-    // }
 
     public void GetScore(int value) {
         gameScore += value;
-        coinText.text = gameScore.ToString();
-        if (gameScore >= 3) {
-            winUI.SetActive(true);
-        }
+        coinText.text = gameScore.ToString();  // 把一個變數(以字串type)扔進去
+        // if (gameScore >= 103) {
+        //     winUI.SetActive(true);
+        // }
     }
 
     public void ReduceHP(int value) {
         gameHP -= value;
         HPText.text = gameHP.ToString();
-        if (gameHP == 0) {
-            loseUI.SetActive(true);
-        }
+        // if (gameHP <= 0) {
+        //     HPText.text = "0";
+        //     loseUI.SetActive(true);
+        // }
     }
 
+    void Update() {
+        if (gameScore >= 103)
+        {
+            winUI.SetActive(true);
+        }
+        if (gameHP <= 0)
+        {
+            HPText.text = "0";
+            loseUI.SetActive(true);
+        }
+
+    }
 }

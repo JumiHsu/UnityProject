@@ -55,6 +55,8 @@
   <ItemGroup>
      <Compile Include="Assets\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
      <Compile Include="Assets\Script\ActiveArrayCoins.cs" />
+     <Compile Include="Assets\Script\ActiveMonsters.cs" />
+     <Compile Include="Assets\Script\ActiveScoreHundred.cs" />
      <Compile Include="Assets\Script\DestroySelf.cs" />
      <Compile Include="Assets\Script\GameManager.cs" />
      <Compile Include="Assets\Script\MainCharacter_force.cs" />
@@ -67,8 +69,10 @@
      <Compile Include="Assets\Script\note\MainCharacter_force_ub02.cs" />
      <Compile Include="Assets\Script\note\TriggerFlag_note.cs" />
      <Compile Include="Assets\Script\slimeBlue.cs" />
+     <Compile Include="Assets\Script\slimePurple.cs" />
      <Compile Include="Assets\Script\snail_Behaviour.cs" />
      <Compile Include="Assets\Script\TriggerCoin.cs" />
+     <Compile Include="Assets\Script\TriggerCoinKey.cs" />
      <Compile Include="Assets\Script\TriggerFlag.cs" />
      <None Include="Assets\Demigiant\DOTweenPro\readme.txt" />
      <None Include="Assets\Demigiant\DemiLib\Core\DemiLib.xml" />
