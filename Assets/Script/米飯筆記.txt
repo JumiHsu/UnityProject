@@ -651,7 +651,7 @@ void 開門()
 	_啾咪.開門();
 	}
 }
-
+  
 
 【目的】
 分數增加
@@ -661,7 +661,7 @@ void 開門()
 並傳入分數數值
 
 
-<GameManager.csd>
+<GameManager.cs>
 因為需要改UI上的數字，所以需要引入：
 using UnityEngine.UI;
 
@@ -678,7 +678,8 @@ GameManager上要設定兩個欄位
 TargetUI -> 把 panel物件 拉進去，記得panel要關著
 TargetText -> 把Canvas下的text拉進去
 
-
+14/20/29/30/32/34/35/36/41
+41
 
 
 

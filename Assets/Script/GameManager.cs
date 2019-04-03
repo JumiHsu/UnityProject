@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     public void GetScore(int value) {
         gameScore += value;
-        coinText.text = gameScore.ToString();  // 把一個變數(以字串type)扔進去
+        coinText.text = gameScore.ToString();  // 把一個變數轉成字串type，扔進去
         // if (gameScore >= 103) {
         //     winUI.SetActive(true);
         // }
