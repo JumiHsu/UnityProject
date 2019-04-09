@@ -10,7 +10,7 @@ public class MainCharacter_force : MonoBehaviour
     private SpriteRenderer m_SpriteRenderer;
     private Transform m_transform;
 
-    public float moveSpeed = 3.5f;
+    public static float moveSpeed = 3.5f;
     public Vector2 moveDir;
     public float jumpForce = 350.0f;
 
