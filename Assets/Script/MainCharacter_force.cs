@@ -137,7 +137,7 @@ public class MainCharacter_force : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Ground"))  // 判斷踩著的物體是不是Ground，是的話：就判斷一下他的normal值的y是多少
+        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Standable") )  // 判斷踩著的物體是不是Ground，是的話：就判斷一下他的normal值的y是多少
         {
             foreach (ContactPoint2D element in other.contacts)  //element是接觸點相關資訊，其中一個資訊是接觸點法線normal
             {

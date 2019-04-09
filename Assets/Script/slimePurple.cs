@@ -6,13 +6,14 @@ using UnityEngine.UI;
 public class slimePurple : MonoBehaviour
 {
     private Rigidbody2D m_Rigidbody2D;
-    private Material m_Material;
-    private Renderer m_Renderer;
     public GameObject soundPrefab;
     public Text HPText;
 
     public bool isReduceHPEffect;
     public float timer = 0.0f;
+    private int reduceHP_purple = 3;
+
+    public ContactPoint2D[] contacts;  // contacts是一個陣列
 
 
     void OnTriggerEnter2D(Collider2D toucher) {
@@ -23,11 +24,11 @@ public class slimePurple : MonoBehaviour
 
             // 扣血
             var soundObj = Instantiate(soundPrefab, transform.position, Quaternion.identity);
-            GameManager.instance.ReduceHP(3);  // 實例化 GameManager 去呼叫裡面的方法，扣一次1血
+            GameManager.instance.ReduceHP(reduceHP_purple);  // 實例化 GameManager 去呼叫裡面的方法，扣一次1血
+
 
             // 血量text會閃一下
             isReduceHPEffect = true;
-
 
             Destroy(soundObj, 0.5f);
         }
@@ -41,7 +42,7 @@ public class slimePurple : MonoBehaviour
 
             if (isReduceHPEffect && timer < 4)
             {
-                timer += Time.deltaTime * 12;
+                timer += Time.deltaTime * 16;
 
                 if (timer % 2 > 1.0f)
                 {
