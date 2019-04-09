@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         }
         if (gameHP <= 0)
         {
+            gameHP = 0;
             HPText.text = "0";
             loseUI.SetActive(true);
         }
