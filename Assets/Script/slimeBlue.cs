@@ -50,7 +50,7 @@ public class slimeBlue : MonoBehaviour
         // 碰到其他任何物體(非地面非角色)
         if (toucher.name != null && toucher.tag != "Ground" && m_Animator.GetBool("isFacingLeft") == true) {
             Debug.Log("************告訴我他的tag! =" + toucher.tag);
-            Thread.Sleep(1000);  // delay 1 秒 = 1000
+            // Thread.Sleep(1000);  // delay 1 秒 = 1000
             m_Animator.SetBool("isFacingLeft",false);
             m_Animator.SetBool("isFacingRight", true);
         }

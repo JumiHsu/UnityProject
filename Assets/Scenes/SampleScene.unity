@@ -2545,7 +2545,8 @@ MonoBehaviour:
   slimePurple: {fileID: 1907672101}
   slimeGreen: {fileID: 265224010}
   slimeGreen_Position: {fileID: 2054578967}
-  mosterSnail: {fileID: 1938930040}
+  mosterSnail: {fileID: 7634027670829685889, guid: 92cdb93836110e347bd9d295dd88aec9,
+    type: 3}
 --- !u!212 &1894640212
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2602,7 +2603,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1894640207}
   m_LocalRotation: {x: -0, y: -0, z: 0.3420703, w: 0.93967444}
-  m_LocalPosition: {x: 9.5, y: 1.16, z: 0}
+  m_LocalPosition: {x: -4.52, y: 1.56, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2744,11 +2745,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98424802ed9975b4f87440b359f053b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundPrefab: {fileID: 8625680719119965520, guid: 5106c4c97042d3f45a7593cca405cd78,
-    type: 3}
   HPText: {fileID: 420745771}
   isReduceHPEffect: 0
-  timer: 0
+  soundPrefab: {fileID: 8625680719119965520, guid: 5106c4c97042d3f45a7593cca405cd78,
+    type: 3}
+  slimePurple_StartPoint: {fileID: 6197895623421945415, guid: 5e555221b6aa974459188333f53d28ab,
+    type: 3}
+  slimePurple_EndPoint: {fileID: 777058235070337792, guid: 306cd146c83f82e46a4d9b7e91f57f20,
+    type: 3}
 --- !u!60 &1907672108
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -2828,7 +2832,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1938930041}
-  - component: {fileID: 1938930042}
   m_Layer: 0
   m_Name: slimeBlue_Position
   m_TagString: Untagged
@@ -2850,27 +2853,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &1938930042
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1938930040}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!1 &1945874033
 GameObject:
   m_ObjectHideFlags: 0
@@ -2993,7 +2975,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1945874033}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.21, y: 1.3219998, z: -0.017578125}
+  m_LocalPosition: {x: 3.8, y: 1.3219998, z: -0.017578125}
   m_LocalScale: {x: 1.785, y: 1.785, z: 1.785}
   m_Children: []
   m_Father: {fileID: 0}
