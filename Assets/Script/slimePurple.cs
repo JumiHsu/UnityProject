@@ -22,6 +22,14 @@ public class slimePurple : MonoBehaviour
     float patrolCount_i =0.0f;
     public GameObject slimePurple_StartPoint;
     public GameObject slimePurple_EndPoint;
+    // bool isLeft = false;
+    // bool isMid = false;
+    // bool isRight = false;
+
+    bool isLRCheck = false;
+    public bool moveL = false;
+    public bool moveR = false;
+
 
     float timer_f;
     int timer_i;
@@ -40,8 +48,35 @@ public class slimePurple : MonoBehaviour
         {
             slimePurple_StartPoint = Instantiate(slimePurple_StartPoint, slimePurple_StartPoint.transform.position, Quaternion.identity);
             slimePurple_EndPoint = Instantiate(slimePurple_EndPoint, slimePurple_EndPoint.transform.position, Quaternion.identity);
+            if(slimePurple_StartPoint.transform.position.x < slimePurple_EndPoint.transform.position.x)
+            {
+                isLRCheck = true;
+            }
+            else
+            {
+                isLRCheck = false;
+            }
             Debug.Log("起點(左方點)位置" + slimePurple_StartPoint.transform.position.x);
             Debug.Log("起點(右方點)位置" + slimePurple_EndPoint.transform.position.x);
+            Debug.Log("L是不是在R左邊" + isLRCheck);
+
+            //1 判斷初始位置
+            // if 位置>S 打開moveL
+            // if 位置<=S，打開moveR
+            //2 移動邏輯
+            // if moveL=T && 位置>S ,Left()
+            // if 位置=S ,moveR打開，moveL關掉，Right()
+            // if moveR=T && 位置<E ,Right()
+            // if 位置=E ,moveL打開，moveR關掉，Left()
+            if (m_Transform.position.x > slimePurple_StartPoint.transform.position.x)
+            {
+                moveL=true;
+            }
+            else
+            {
+                moveR = true;
+            }
+
         }
     }
 
@@ -67,13 +102,14 @@ public class slimePurple : MonoBehaviour
 
     void slimePurple_moveLeft(float slimePurple_moveSpeed)
     {
-        m_Transform.position += new Vector3(slimePurple_moveSpeed, 0, 0) * Time.deltaTime;
+        m_Transform.position += new Vector3(-slimePurple_moveSpeed, 0, 0) * Time.deltaTime;
     }
 
     void slimePurple_moveRight(float slimePurple_moveSpeed)
     {
-        m_Transform.position += new Vector3(-slimePurple_moveSpeed, 0, 0) * Time.deltaTime;
+        m_Transform.position += new Vector3(slimePurple_moveSpeed, 0, 0) * Time.deltaTime;
     }
+
 
     void Update()
     {
@@ -103,20 +139,32 @@ public class slimePurple : MonoBehaviour
             }
         }
 
+
         // 巡邏2：鎖定起始兩點位置
-        if (patrol_method == "fix_Start_End_Pos")
+        if (patrol_method == "fix_Start_End_Pos" && isLRCheck)
         {
             Debug.Log("紫色史萊姆位置：" + m_Transform.position.x);
 
-            if(m_Transform.position.x != slimePurple_StartPoint.transform.position.x || m_Transform.position.x == slimePurple_EndPoint.transform.position.x)
+            if(moveL == true && m_Transform.position.x > slimePurple_StartPoint.transform.position.x)
             {
                 slimePurple_moveLeft(slimePurple_moveSpeed);
             }
-            else if (m_Transform.position.x != slimePurple_EndPoint.transform.position.x || m_Transform.position.x == slimePurple_StartPoint.transform.position.x)
+            else if (m_Transform.position.x <= slimePurple_StartPoint.transform.position.x)
+            {
+                moveR = true;
+                moveL = false;
+                slimePurple_moveRight(slimePurple_moveSpeed);
+            }
+            else if (moveR == true && m_Transform.position.x < slimePurple_EndPoint.transform.position.x)
             {
                 slimePurple_moveRight(slimePurple_moveSpeed);
             }
-            
+            else if  (m_Transform.position.x >= slimePurple_EndPoint.transform.position.x)
+            {
+                moveL = true;
+                moveR = false;
+                slimePurple_moveLeft(slimePurple_moveSpeed);
+            }
         }
 
 
