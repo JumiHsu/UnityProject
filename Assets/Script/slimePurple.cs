@@ -143,7 +143,7 @@ public class slimePurple : MonoBehaviour
         // 巡邏2：鎖定起始兩點位置
         if (patrol_method == "fix_Start_End_Pos" && isLRCheck)
         {
-            Debug.Log("紫色史萊姆位置：" + m_Transform.position.x);
+            // Debug.Log("紫色史萊姆位置：" + m_Transform.position.x);
 
             if(moveL == true && m_Transform.position.x > slimePurple_StartPoint.transform.position.x)
             {
