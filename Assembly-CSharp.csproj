@@ -53,6 +53,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\2DOutline\Scripts\AlwaysRotate.cs" />
+     <Compile Include="Assets\2DOutline\Scripts\AnimateSprite.cs" />
+     <Compile Include="Assets\2DOutline\Scripts\demo1.cs" />
+     <Compile Include="Assets\2DOutline\Scripts\Outline.cs" />
+     <Compile Include="Assets\2DOutline\Scripts\OutlineManager.cs" />
      <Compile Include="Assets\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
      <Compile Include="Assets\OutlineEffect\Demo\MaterialSwitcher.cs" />
      <Compile Include="Assets\OutlineEffect\Demo\OutlineAnimation.cs" />
@@ -91,15 +96,38 @@
      <Compile Include="Assets\SpaceAssets\Scripts\ShootingStar.cs" />
      <Compile Include="Assets\SpaceAssets\Scripts\SpaceManager.cs" />
      <None Include="Assets\Demigiant\DOTweenPro\readme.txt" />
+     <None Include="Assets\_MK\MKToonFree\Shader\Inc\Outline\MKToonOutlineOnlyIO.cginc" />
      <None Include="Assets\Demigiant\DemiLib\Core\DemiLib.xml" />
      <None Include="Assets\OutlineEffect\Resources\OutlineShader.shader" />
      <None Include="Assets\Demigiant\DOTween\DOTween50.xml" />
+     <None Include="Assets\_MK\MKToonFree\Shader\MKToonFreeOutlineOnly.shader" />
+     <None Include="Assets\_MK\MKToonFree\Shader\Inc\Outline\MKToonOutlineOnlySetup.cginc" />
+     <None Include="Assets\2DOutline\Resources\Mats\OutlineBufferShader.shader" />
      <None Include="Assets\OutlineEffect\Resources\OutlineBufferShader.shader" />
+     <None Include="Assets\_MK\MKToonFree\Shader\Inc\Common\MKToonInc.cginc" />
+     <None Include="Assets\_MK\MKToonFree\Shader\Inc\Outline\MKToonOutlineOnlyBase.cginc" />
+     <None Include="Assets\_MK\MKToonFree\Shader\Inc\ShadowCaster\MKToonShadowCasterIO.cginc" />
      <None Include="Assets\Demigiant\DOTween\DOTween46.xml" />
+     <None Include="Assets\TSF\Shaders\TSFOutline.shader" />
+     <None Include="Assets\_MK\MKToonFree\Shader\Inc\Forward\MKToonForwardAddSetup.cginc" />
+     <None Include="Assets\_MK\MKToonFree\Shader\Inc\Forward\MKToonForwardIO.cginc" />
+     <None Include="Assets\_MK\MKToonFree\Shader\MKToonFreeMobile.shader" />
+     <None Include="Assets\TSF\Shaders\TSF.shader" />
+     <None Include="Assets\_MK\MKToonFree\Shader\Inc\Common\MKToonDef.cginc" />
      <None Include="Assets\Demigiant\DOTween\readme.txt" />
+     <None Include="Assets\_MK\MKToonFree\Shader\Inc\Surface\MKToonSurfaceIO.cginc" />
      <None Include="Assets\Demigiant\DOTween\DOTween43.xml" />
+     <None Include="Assets\_MK\MKToonFree\Shader\Inc\ShadowCaster\MKToonShadowCasterSetup.cginc" />
+     <None Include="Assets\_MK\MKToonFree\Shader\Inc\Forward\MKToonForwardBaseSetup.cginc" />
+     <None Include="Assets\_MK\MKToonFree\Shader\Inc\Common\MKToonLight.cginc" />
      <None Include="Assets\Script\米飯筆記.txt" />
+     <None Include="Assets\_MK\MKToonFree\Shader\MKToonFree.shader" />
+     <None Include="Assets\_MK\MKToonFree\Shader\Inc\Forward\MKToonForward.cginc" />
+     <None Include="Assets\2DOutline\Resources\Mats\OutlineShader.shader" />
+     <None Include="Assets\_MK\MKToonFree\Shader\Inc\Common\MKToonV.cginc" />
+     <None Include="Assets\_MK\MKToonFree\Shader\Inc\Surface\MKToonSurface.cginc" />
      <None Include="Assets\Demigiant\readme_DOTweenPro.txt" />
+     <None Include="Assets\_MK\MKToonFree\Shader\Inc\ShadowCaster\MKToonShadowCaster.cginc" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>D:/Perforce/UnityProctice/UnityProject_moveNew/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
