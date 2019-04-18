@@ -43,7 +43,7 @@ public class ActiveMonsters : MonoBehaviour
             Instantiate(mosterSnail, box_position.transform.position, Quaternion.identity);
 
             // 一段時間後消滅
-            var Snail_Temp = Instantiate(mosterSnail, new Vector3(0, -0.2f, 0), Quaternion.identity);
+            var Snail_Temp = Instantiate(mosterSnail, new Vector3(4.4f, 0.75f, 0), Quaternion.identity);
             Destroy(Snail_Temp,2.0f);
 
 

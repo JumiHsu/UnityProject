@@ -18,7 +18,7 @@ public class slimePurple : MonoBehaviour
     public GameObject soundPrefab;
 
     string patrol_method = "";
-    float slimePurple_moveSpeed = 0.5f;
+    float slimePurple_moveSpeed = 0.8f;
     float patrolCount_i =0.0f;
     public GameObject slimePurple_StartPoint;
     public GameObject slimePurple_EndPoint;
