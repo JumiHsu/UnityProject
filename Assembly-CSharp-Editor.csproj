@@ -53,8 +53,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\_MK\MKToonFree\Editor\MKToonFreeEditor.cs" />
      <Compile Include="Assets\Demigiant\DOTweenPro\Editor\DOTweenAnimationInspector.cs" />
+     <Compile Include="Assets\UnityStore\_MK\MKToonFree\Editor\MKToonFreeEditor.cs" />
      <None Include="Assets\Demigiant\DemiLib\Core\Editor\DemiEditor.xml" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>D:/Perforce/UnityProctice/UnityProject_moveNew/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
