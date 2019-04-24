@@ -22,7 +22,7 @@ public class MainCharacter_force : MonoBehaviour
     public ContactPoint2D[] contacts;  // contacts是一個陣列
 
     public ContactPoint2D[] hurtContacts;  // contacts是一個陣列
-    public float hurtForce = 1000.0f;
+    public float hurtForce = 300.0f;
 
     public static Vector2[] normalContacts;
 
@@ -151,10 +151,11 @@ public class MainCharacter_force : MonoBehaviour
         }
 
 
+        // 不知道為什麼，他跳的效果不好，會先微微後退(正確) 然後強力往上(不要這樣)
         if (other.gameObject.CompareTag("Monster"))  // 判斷踩著的物體是不是Monster，是的話：給他一個法線方向的力
         {
             m_Rigidbody2D.AddForce(other.contacts[0].normal * hurtForce);
-            Debug.Log("被藍色史萊姆彈開了!");
+            Debug.Log("被 Monster 彈開了!");
 
             for (int i=0; i<=other.contacts.Length; i++) {
                 Debug.Log(other.contacts[i].normal);

@@ -13,7 +13,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
   </PropertyGroup>
@@ -60,6 +60,7 @@
      <Compile Include="Assets\Script\ActiveScoreHundred.cs" />
      <Compile Include="Assets\Script\Camera_normalMove.cs" />
      <Compile Include="Assets\Script\DestroySelf.cs" />
+     <Compile Include="Assets\Script\firecall_DeepRed02.cs" />
      <Compile Include="Assets\Script\GameManager.cs" />
      <Compile Include="Assets\Script\MainCharacter_force.cs" />
      <Compile Include="Assets\Script\mainCharacter_localposition.cs" />

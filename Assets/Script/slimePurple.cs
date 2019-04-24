@@ -6,7 +6,6 @@ using System.Threading;
 
 public class slimePurple : MonoBehaviour
 {
-    // private Rigidbody2D m_Rigidbody2D;
     private Transform m_Transform;
     public ContactPoint2D[] contacts;  // contacts是一個陣列
 
@@ -17,20 +16,20 @@ public class slimePurple : MonoBehaviour
 
     public GameObject soundPrefab;
 
+    // 巡邏總控
     string patrol_method = "";
     float slimePurple_moveSpeed = 0.8f;
+
+    // 巡邏1
     float patrolCount_i =0.0f;
+    // 巡邏2
     public GameObject slimePurple_StartPoint;
     public GameObject slimePurple_EndPoint;
-    // bool isLeft = false;
-    // bool isMid = false;
-    // bool isRight = false;
-
     bool isLRCheck = false;
     public bool moveL = false;
     public bool moveR = false;
 
-
+    // 純屬筆記
     float timer_f;
     int timer_i;
 
@@ -84,17 +83,19 @@ public class slimePurple : MonoBehaviour
     void OnTriggerEnter2D(Collider2D toucher)
     {
         if (toucher.name == "mainCharacter") {
-            // 接觸
+            // 接觸log
             Debug.Log("誰碰到紫色史萊姆了!? =" + toucher.name);
 
-            // 扣血
+            // 音效
             var soundObj = Instantiate(soundPrefab, transform.position, Quaternion.identity);
+
+            // 扣血
             GameManager.instance.ReduceHP(reduceHP_purple);  // 實例化 GameManager 去呼叫裡面的方法，扣一次1血
 
             // 血量text閃爍開關
             isReduceHPEffect = true;
 
-            // 其他
+            // 善後
             Destroy(soundObj, 0.5f);
         }
     }
