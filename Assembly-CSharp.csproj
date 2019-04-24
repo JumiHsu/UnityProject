@@ -54,8 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
-     <Compile Include="Assets\Material\test01_outline.cs" />
-     <Compile Include="Assets\Material\test02_outline.cs" />
+     <Compile Include="Assets\Material\outline.cs" />
      <Compile Include="Assets\Script\ActiveArrayCoins.cs" />
      <Compile Include="Assets\Script\ActiveMonsters.cs" />
      <Compile Include="Assets\Script\ActiveScoreHundred.cs" />
@@ -109,7 +108,7 @@
      <None Include="Assets\UnityStore\_MK\MKToonFree\Shader\Inc\Common\MKToonInc.cginc" />
      <None Include="Assets\UnityStore\_MK\MKToonFree\Shader\Inc\Outline\MKToonOutlineOnlyBase.cginc" />
      <None Include="Assets\UnityStore\_MK\MKToonFree\Shader\Inc\ShadowCaster\MKToonShadowCasterIO.cginc" />
-     <None Include="Assets\Material\test02_outline.shader" />
+     <None Include="Assets\Material\outline.shader" />
      <None Include="Assets\Demigiant\DOTween\DOTween46.xml" />
      <None Include="Assets\UnityStore\2DSpriteOutline\Shaders\SpriteOutline.shader" />
      <None Include="Assets\UnityStore\TSF\Shaders\TSFOutline.shader" />
@@ -127,7 +126,6 @@
      <None Include="Assets\Script\米飯筆記.txt" />
      <None Include="Assets\UnityStore\_MK\MKToonFree\Shader\MKToonFree.shader" />
      <None Include="Assets\UnityStore\_MK\MKToonFree\Shader\Inc\Forward\MKToonForward.cginc" />
-     <None Include="Assets\Material\test01_outline.shader" />
      <None Include="Assets\UnityStore\2DOutline\Resources\Mats\OutlineShader.shader" />
      <None Include="Assets\UnityStore\_MK\MKToonFree\Shader\Inc\Common\MKToonV.cginc" />
      <None Include="Assets\UnityStore\_MK\MKToonFree\Shader\Inc\Surface\MKToonSurface.cginc" />
