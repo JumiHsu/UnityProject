@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 public class MainCharacter_force : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class MainCharacter_force : MonoBehaviour
 
     public static float moveSpeed = 3.5f;
     public Vector2 moveDir;
-    public float jumpForce = 350.0f;
+    public int jumpForce = 400;
 
     public bool isGroundRaycast;  // 用raycast來判斷，但沒作用
     public bool isGroundPosY;  // 用高度來判斷，很爛，但有作用
@@ -20,9 +21,13 @@ public class MainCharacter_force : MonoBehaviour
 
     public GameObject groundedObj;  //判斷踩著的物體是什麼
     public ContactPoint2D[] contacts;  // contacts是一個陣列
-
-    public ContactPoint2D[] hurtContacts;  // contacts是一個陣列
     public float hurtForce = 300.0f;
+
+    public GameObject CANT_beHurtedFlagPrefab;
+    private GameObject CANT_beHurtedFlag = null;
+
+
+    // public ContactPoint2D[] hurtContacts;  // contacts是一個陣列
 
     public static Vector2[] normalContacts;
 
@@ -39,6 +44,7 @@ public class MainCharacter_force : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_transform = GetComponent<Transform>();  // 是初始位置，還是是一個會持續變更值的容器?
+        
     }
 
 
@@ -132,10 +138,12 @@ public class MainCharacter_force : MonoBehaviour
             isGroundRaycast = false;
             m_Animator.SetBool("isGround", false);  //不只是跳的那一下=離地，落地中也應該要是離地
         }
+
     }
 
 
-    void OnCollisionStay2D(Collision2D other)
+    //註2
+    void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Standable") )  // 判斷踩著的物體是不是Ground，是的話：就判斷一下他的normal值的y是多少
         {
@@ -151,22 +159,41 @@ public class MainCharacter_force : MonoBehaviour
         }
 
 
-        // 不知道為什麼，他跳的效果不好，會先微微後退(正確) 然後強力往上(不要這樣)
-        if (other.gameObject.CompareTag("Monster"))  // 判斷踩著的物體是不是Monster，是的話：給他一個法線方向的力
-        {
-            m_Rigidbody2D.AddForce(other.contacts[0].normal * hurtForce);
-            Debug.Log("被 Monster 彈開了!");
 
-            for (int i=0; i<=other.contacts.Length; i++) {
-                Debug.Log(other.contacts[i].normal);
-                normalContacts[i] = other.contacts[i].normal;
+        // 不知道為什麼，他跳的效果不好，會先微微後退(正確) 然後強力往上(不要這樣)
+        // 判斷踩著的物體是不是Monster，是的話：給他一個法線方向的力
+        if (other.gameObject.CompareTag("Monster") )  //&& CANT_beHurtedFlag == null
+        {
+            var hurtVector = other.contacts[0].normal + new Vector2(hurtForce * 2, hurtForce * 0.5f);
+            m_Rigidbody2D.AddForce(hurtVector );
+            // Debug.Log("被 Monster 彈開了!" + "力道是" + hurtForce);
+            Debug.Log("彈開新力道 = "+other.contacts[0].normal + new Vector2(hurtForce * 2, hurtForce * 0.5f));
+            Debug.Log("接觸點向量的長度=" + other.contacts.Length);
+
+
+            // 註1
+            for (int i=0; i<other.contacts.Length; i++)
+            {
+                Debug.Log("i = " +i +"，第" +i +"個接觸點為：" +other.contacts[i].point +"，該點法向量為：" +other.contacts[i].normal);
             }
+
+            // CANT_beHurtedFlag = Instantiate(CANT_beHurtedFlagPrefab,m_transform.position,Quaternion.identity);
+
+
         }
+            // Destroy(CANT_beHurtedFlag,2.0f);
     }
-    // Script error: OnCollisionStay
-    // This message parameter has to be of type: Collision
-    // The message will be ignored.
-    // 是我 方法名稱 寫錯了，應該要加上 2D
+
+    /* 
+    UnassignedReferenceException: The variable CANT_beHurtedFlagPrefab of MainCharacter_force has not been assigned.
+    You probably need to assign the CANT_beHurtedFlagPrefab variable of the MainCharacter_force script in the inspector.
+    UnityEngine.Object.Internal_InstantiateSingle (UnityEngine.Object data, UnityEngine.Vector3 pos, UnityEngine.Quaternion rot) <0x3f6231b0 + 0x00062> in <ddf1b6b8983d46ce84146e6e1ef5a65d>:0
+    UnityEngine.Object.Instantiate (UnityEngine.Object original, UnityEngine.Vector3 position, UnityEngine.Quaternion rotation) (at C:/buildslave/unity/build/Runtime/Export/UnityEngineObject.bindings.cs:211)
+    UnityEngine.Object.Instantiate[T] (T original, UnityEngine.Vector3 position, UnityEngine.Quaternion rotation) (at C:/buildslave/unity/build/Runtime/Export/UnityEngineObject.bindings.cs:285)
+    MainCharacter_force.OnCollisionEnter2D (UnityEngine.Collision2D other) (at Assets/Script/MainCharacter_force.cs:180)
+    */
+
+
 
 
 
@@ -180,5 +207,35 @@ public class MainCharacter_force : MonoBehaviour
     }
 
 
-
 }
+
+
+/* 註1
+            // 為什麼這樣就跳錯
+            for (int i=0; i<=other.contacts.Length; i++) {
+                Debug.Log("i = " + i + "，" + other.contacts[i].normal);
+                // Debug.Log( i.ToString() + other.contacts[i].normal.x.ToString() + other.contacts[i].normal.y.ToString());
+                //normalContacts[i] = other.contacts[i].normal;
+            }
+            // 錯誤訊息
+            // IndexOutOfRangeException: Index was outside the bounds of the array.
+            // MainCharacter_force.OnCollisionEnter2D(UnityEngine.Collision2D other)(at Assets / Script / MainCharacter_force.cs:166)
+
+
+            // 在這段裡面加上 normalContacts[i] = other.contacts[i].point; 也會跳錯
+            for (int i=0; i<other.contacts.Length; i++)
+            {
+                Debug.Log("i = " +i +"，第" +i +"個接觸點為：" +other.contacts[i].point +"，該點法向量為：" +other.contacts[i].normal);
+                // normalContacts[i] = other.contacts[i].point;
+            }
+                // 錯誤訊息
+                // NullReferenceException: Object reference not set to an instance of an object
+                // MainCharacter_force.OnCollisionEnter2D(UnityEngine.Collision2D other)(at Assets / Script / MainCharacter_force.cs:176)
+*/
+
+/* 註2
+    // Script error: OnCollisionStay
+    // This message parameter has to be of type: Collision
+    // The message will be ignored.
+    // 是我 方法名稱 寫錯了，應該要加上 2D
+*/

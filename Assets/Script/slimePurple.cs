@@ -84,7 +84,7 @@ public class slimePurple : MonoBehaviour
     {
         if (toucher.name == "mainCharacter") {
             // 接觸log
-            Debug.Log("誰碰到紫色史萊姆了!? =" + toucher.name);
+            // Debug.Log("誰碰到紫色史萊姆了!? =" + toucher.name);
 
             // 音效
             var soundObj = Instantiate(soundPrefab, transform.position, Quaternion.identity);
