@@ -90,7 +90,7 @@ public class MainCharacter_force : MonoBehaviour
         }
 
 
-        // 本來以為會像游泳，結果發現比較像是滑翔性的飛
+        // 本來以為會像游泳，結果發現比較像是 Flappy Bird 的飛
         if (Input.GetKeyDown(KeyCode.V) && m_Rigidbody2D.velocity.y < 5.0f )
         {
             m_Rigidbody2D.AddForce(Vector2.up * jumpForce * 0.5f);

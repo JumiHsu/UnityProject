@@ -48,11 +48,27 @@ public class slimeBlue : MonoBehaviour
         // other.gameObject.CompareTag("Ground")
 
         // 碰到其他任何物體(非地面非角色)
-        if (toucher.name != null && toucher.tag != "Ground" && m_Animator.GetBool("isFacingLeft") == true) {
+        if (toucher.name != null && toucher.tag != "Ground" && toucher.tag != "Player") {
+        // if (toucher.name != null && toucher.tag != "Ground" && m_Animator.GetBool("isFacingLeft") == true) {
             Debug.Log("************告訴我他的tag! =" + toucher.tag);
             // Thread.Sleep(1000);  // delay 1 秒 = 1000
-            m_Animator.SetBool("isFacingLeft",false);
-            m_Animator.SetBool("isFacingRight", true);
+            // m_Animator.SetBool("isFacingLeft",false);
+            // m_Animator.SetBool("isFacingRight", true);
+            if (m_Animator.GetBool("isFacingRight"))
+            {
+                m_Animator.SetBool("isFacingRight", false);
+                m_Animator.SetBool("isFacingLeft", true);
+            }
+            else if(m_Animator.GetBool("isFacingLeft"))
+            {
+                m_Animator.SetBool("isFacingLeft", false);
+                m_Animator.SetBool("isFacingRight", true);
+            }
+            else
+            {
+                Debug.Log("檢查 slimeBlue 的來回巡邏程式碼");
+            }
+
         }
 
         // 碰到其他任何物體(非地面非角色)
