@@ -21,11 +21,13 @@ public class MainCharacter_force : MonoBehaviour
 
     public GameObject groundedObj;  //判斷踩著的物體是什麼
     public ContactPoint2D[] contacts;  // contacts是一個陣列
-    public float hurtForce = 300.0f;
+    public float hurtForce = 200.0f;
 
     public GameObject CANT_beHurtedFlagPrefab;
     private GameObject CANT_beHurtedFlag = null;
 
+    private bool isMonsterTouch = false;
+    private float timerMonsterTouch = 0;
 
     // public ContactPoint2D[] hurtContacts;  // contacts是一個陣列
 
@@ -75,6 +77,7 @@ public class MainCharacter_force : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow))
         {
             moveDir.x = 0;  // moveDir = Vector2.zero;
+            // moveDir.x = m_Rigidbody2D.velocity.x;  // 這樣改，如果放開right，他不會歸0，而會保持滑行
             m_Animator.SetBool("isMove", false);
         }
 
@@ -104,6 +107,7 @@ public class MainCharacter_force : MonoBehaviour
         // 所以你先令一個 moveDir = (x,y)，x = moveSpeed
         // y = 當前的 Rigidbody2D 重力(x,y)部分的y
         // 再把這個 (x,y)，重新命給 當前的 Rigidbody2D 重力(x,y)
+        // moveDir.x = m_Rigidbody2D.velocity.x;
         moveDir.y = m_Rigidbody2D.velocity.y;  // 當前 rigidbody2D 已經令給 m_rigidbody2D，取得 m_rigidbody2D 的重力數值作為moveDir.y
 
         m_Rigidbody2D.velocity = moveDir;  // 這時候的 moveDir=(x,y)=( moveSpeed或-moveSpeed , 當前重力數值=m_Rigidbody2D.velocity.y )
@@ -164,8 +168,25 @@ public class MainCharacter_force : MonoBehaviour
         // 判斷踩著的物體是不是Monster，是的話：給他一個法線方向的力
         if (other.gameObject.CompareTag("Monster") )  //&& CANT_beHurtedFlag == null
         {
-            var hurtVector = other.contacts[0].normal + new Vector2(hurtForce * 2, hurtForce * 0.5f);
-            m_Rigidbody2D.AddForce(hurtVector );
+            // moveDir.x = m_Rigidbody2D.velocity.x * hurtForce;
+            // moveDir.y = m_Rigidbody2D.velocity.y;
+
+            if (isMonsterTouch == true)
+            {
+                timerMonsterTouch += 0.02f;
+                if (timerMonsterTouch < 0.5f)
+                    moveDir.x = m_Rigidbody2D.velocity.x;
+                else
+                {
+                    isMonsterTouch = false;
+                    timerMonsterTouch = 0;
+                }
+            }
+
+
+            // var hurtVector = other.contacts[0].normal + new Vector2(hurtForce * 2, hurtForce * 0.5f);
+            var hurtVector = other.contacts[0].normal * hurtForce;
+            m_Rigidbody2D.AddForce(hurtVector);
             // Debug.Log("被 Monster 彈開了!" + "力道是" + hurtForce);
             Debug.Log("彈開新力道 = "+other.contacts[0].normal + new Vector2(hurtForce * 2, hurtForce * 0.5f));
             Debug.Log("接觸點向量的長度=" + other.contacts.Length);
